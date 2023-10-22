@@ -1,4 +1,5 @@
 import './style.css'
+import Stack from './stack';
 
 const OPCode = {
   'hlt': 'hlt',
@@ -12,8 +13,8 @@ const vm = {
   sp: 0
 }
 
-const stack = []
-function push(v) {
+const stack = Stack()
+function pushToStack(v) {
   stack.push(v)
   traceOp(v)
 }
@@ -37,8 +38,7 @@ do {
       // get new op
       vm.pc++;
       const op = program[vm.pc]
-      // push to stack
-      push(op)
+      pushToStack(op)
       break;
 
     case OPCode.add:
@@ -56,5 +56,5 @@ do {
 } while (v !== OPCode.hlt)
 
 function traceOp(code) {
-  console.log(vm.pc + ': ' + code, '\t\t STACK: ' + stack)
+  console.log(vm.pc + ': ' + code, '\t\t STACK: ' + stack.getValue())
 }
